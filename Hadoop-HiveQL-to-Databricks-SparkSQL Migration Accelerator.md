@@ -106,7 +106,7 @@ Perform the following tasks:
 
 21. Log into the edge node using azureuser
     
-     ssh azureuser@<ip address of the edgenode>
+         ssh azureuser@<ip address of the edgenode>
 
     ![Portal image](./images/edge-node-21.png)
 
@@ -122,7 +122,7 @@ Perform the following tasks:
 
 25. Run the hive file as a job.
 
-    hive -f <hive ql file>
+        hive -f <hive ql file>
 
 26. Validate the hive tables.
 
