@@ -106,7 +106,7 @@ Perform the following tasks:
 
 21. Log into the edge node using azureuser
     
-     ssh azureuser@<ip address>
+     ssh azureuser@<ip address of the edgenode>
 
     ![Portal image](./images/edge-node-21.png)
 
