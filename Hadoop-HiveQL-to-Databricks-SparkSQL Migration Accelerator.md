@@ -63,11 +63,13 @@ Perform the following tasks:
         
     As the script runs, you will see various messages when the resources are created. The script will take about 5 minutes to complete. When it has finished, it will display the IP address of the new virtual machine. Make a note of this address.
 
+    ![Portal image](./images/portal-img-11.png)
+
 12. Connect using SSH as the root user as shown below. Replace <ip address> with the IP address of the virtual machine. The password is Pa55w.rdDemo. Enter yes when prompted to connect.
 
     NOTE:
     You may need to wait for a minute while the virtual machine services start before continuing
-    
+
         ssh root@<ip address>
 
 13. At the bash prompt, run the following command to set the password for the azureuser account. Provide a password of your own choosing. You'll use this account rather than root for running the Cloudera services.
@@ -84,16 +86,52 @@ Perform the following tasks:
 
         NOTE: Again. you may need to wait for a minute while the Cloudera Manager is initialized.
 
+    ![Portal image](./images/cloudera-manager-16.png)
 
+17. Log in with the username admin with password admin.
+
+18. In the Cloudera Manager, select the drop-down menu for the Cloudera Management Service, select Start, wait for the management service to start up correctly, and then select Close.
+
+    ![Portal image](./images/cloudera-manager-18.png)
+
+19. Select the drop-down menu for the Cluster 1 cluster, select Start, wait for the various services (Zookeeper, HDFS, Kafka, HBase, Yarn, Spark, and Hive) to start, and then select Close.
+
+    ![Portal image](./images/cloudera-manager-19.png)
+
+20. Verify that all services are shown as running correctly.
+
+    NOTE: You may receive a warning from HDFS and/or Zookeeper initially, but they should clear after a minute or so.
+
+    ![Portal image](./images/cloudera-manager-20.png)
+
+21. Log into the edge node using azureuser
     
-            
+     ssh azureuser@<ip address>
 
-  
-    2. Todo - Steps - 2
-    3. Todo - Steps - 3
-4. Congratulations!! At this point you have successfully setup Cloudera Hadoop cluster. Mounted raw dataset and explored several typical queries
+    ![Portal image](./images/edge-node-21.png)
+
+22. Copy the files from git repo to edge node for the test runs
+
+        wget <github link to data>
+        
+23. Copy the raw data to hdfs location
+
+24. Copy sample hql file
+
+        wget <github link to sample hive hql file>  
+
+25. Run the hive file as a job.
+
+    hive -f <hive ql file>
+
+26. Validate the hive tables.
+
+27. Run the sample queries.
+
+28. Congratulations!! At this point you have successfully setup Cloudera Hadoop cluster. Mounted raw dataset and explored several typical queries
 
     ![Successful completion](./images/ADLS-Provision-complete.png)
+
 
 ### Migrate raw data from Hadoop File System to Azure Data Lake Storage gen2 using Azure Data Factory
 
