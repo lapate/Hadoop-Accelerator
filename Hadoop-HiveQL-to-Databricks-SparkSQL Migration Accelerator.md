@@ -135,7 +135,7 @@ Perform the following tasks:
 
 ### Migrate raw data from Hadoop File System to Azure Data Lake Storage gen2 using Azure Data Factory
 
-1. Todo - Steps - 1
+1. Todo - Create ADLS Gen2
     - Describe steps
       ![Tag](./images/ADLS-Provision-complete.png)
 2. Todo - Steps - 2
@@ -144,24 +144,66 @@ Perform the following tasks:
 
     ![Successful completion](./images/ADLS-Provision-complete.png)
 
-### Migrate raw data from Hadoop File System to Azure Data Lake Storage Gen2 using WanDisco partner solution
+### Migrate raw data from Hadoop File System to Azure Data Lake Storage Gen2 using WanDisco partner solution (optional)
 
-1. Todo - Steps - 1
-    - Describe steps
-      ![Tag](./images/ADLS-Provision-complete.png)
-2. Todo - Steps - 2
-3. Todo - Steps - 3
-4. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using WanDisco partner solution
+1. If using 3rd party tool to migrate data learn the process from the video series below
+    - Journey to Live Data Migration (How-To Video Series)
+    ![Getting started (Prerequisites)]("https://wandisco.wistia.com/medias/eh42c8lt77")
+    ![Create Data Migrator resource]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=80ft4yys5b")
+    ![Install Migrator on your edge node]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=altiee9udk")
+    ![Identify the Target for Hadoop data]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=q4x8jfm8jp")
+    ![Create Migration and move data!]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=0ppt8o9h8p")
+
+2. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using WanDisco partner solution
 
     ![Successful completion](./images/ADLS-Provision-complete.png)
 
 ### Setup DataBricks environment and run matched SparkSQL queries. Explore the results
 
-1. Todo - Steps - 1
-    - Describe steps
-      ![Tag](./images/ADLS-Provision-complete.png)
-2. Todo - Steps - 2
-3. Todo - Steps - 3
-4. Congratulations!! At this point you have successfully setup DataBricks cluster. Mounted raw dateset as Azure Data Lake Storage (ADLS) GEN2 and explored the queries converted from HiveQL
+1. Create DataBricks workspace resource
+    - In the Azure portal, search for and navigate to Azure DataBricks workspace resource creation wizard. Below is the initial screen. Enter the details on subscription name and the resource group, workspace name, region as shown below
+    ![Tag](./images/DB-Cluster-Provision-1.png)
+    - Click "Next Networking" and leave default
+    ![Tag](./images/DB-Cluster-Provision-2.png)
+    - Click "Next Advanced" and leave default
+    ![Tag](./images/DB-Cluster-Provision-3.png)
+    - Click on "Review + Create". Validation begins. Fix any validation errors.
+    ![Tag](./images/DB-Cluster-Provision-4.png)
+    - Click on "Create". Deployment begins
+    ![Tag](./images/DB-Cluster-Provision-deployment.png)
+    - Finally the workspace is provisioned when deployment is completed
+    ![Tag](./images/DB-Cluster-Provision-complete.png)
 
+2. Open workspace, start cluster
+    - Click on "Launch Workspace". You will see below screen show up. At this point the user is authenticated into the workspace
+    ![Tag](./images/DB-WKSP-Cluster-Creation-1.png)
+    - Click on "Create a Cluster" in the left menu pane start provisioning the compute
+    ![Tag](./images/DB-WKSP-Cluster-Creation-2.png)
+    - Click on "Create Cluster" above to see new screen as below where you could enter additional configurations. Leave all default
+    ![Tag](./images/DB-WKSP-Cluster-Creation-3.png)
+    - Click on "Create" above to create the cluster. It will take few seconds before the below completion screen shows up
+    ![Tag](./images/DB-WKSP-Cluster-Creation-4.png)
+    - Below is the summary screen 
+    ![Tag](./images/DB-WKSP-Cluster-Creation-5.png)
+
+3. Create DataBricks Token (for CLI) and DataBricks secrets
+    - Create DataBricks Token using the "User Settings" (top right) menu option
+    ![Tag](./images/DB-Token-Creation.png)
+    - Open Cloud shell in the Azure portal and activate the DataBricks environment
+    ![Tag](./images/DB-SECRETS-1.png)
+    - Use the previously generated DataBricks token to authenticate
+    ![Tag](./images/DB-SECRETS-2.png)
+    - Create DataBricks scope and the secrets using the APIs
+    ![Tag](./images/DB-SECRETS-0.png)
+    ![Tag](./images/DB-SECRETS-3.png)
+
+4. Import .dbc notebooks and execute queries by importing them into the workspace. These sample notebooks are available on the repository
+    - Import note books as below
+    ![Tag](./images/DB-WKSP-Cluster-ImportNotebooks.png)
+    - Execute - ncsa-hadoopaccelerator-sample-notebook.dbc to see how datasets are mounted and then Apache Spark SQL queries are used to obtain flight delay information
+    ![Tag](./images/DB-WKSP-Cluster-Notebook1-Scala.png)
+    - Execute - ncsa-hadoopaccelerator-sample-sql-notebook.dbc to see how datasets are consumed inline and then  SQL queries are used to obtain same flight delay information
+    ![Tag](./images/DB-WKSP-Cluster-Notebook2-SQL.png)
+
+5. Congratulations!! At this point you have successfully setup DataBricks cluster. Mounted raw dateset as Azure Data Lake Storage (ADLS) GEN2 and explored the queries converted from HiveQL
     ![Successful completion](./images/ADLS-Provision-complete.png)
