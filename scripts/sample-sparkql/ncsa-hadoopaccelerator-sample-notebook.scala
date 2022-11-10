@@ -116,7 +116,7 @@ display(longestDelay)
 
 
 val satDelayedTrips = departureDelays_geo.
-  filter("src = 'SFO' and delay > 0").
+  filter("src = 'SAT' and delay > 0").
   groupBy("src", "dst").
   avg("delay").
   orderBy(org.apache.spark.sql.functions.col("avg(delay)").desc)

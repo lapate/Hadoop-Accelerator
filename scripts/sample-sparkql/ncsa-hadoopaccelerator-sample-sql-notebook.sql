@@ -1,23 +1,35 @@
 -- Databricks notebook source
-drop table airportsna;
+drop table IF EXISTS airportsna;
 create external table airportsna (City string,
 State string,
 Country string,
 IATA string)
-location 'dbfs:/FileStore/shared_uploads/jaseemhamsa@microsoft.com/airportsna/'
+location "dbfs:/mnt/demo-dataset/raw/airport-codes-na"
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE TBLPROPERTIES('skip.header.line.count'='1');
 
 -- COMMAND ----------
 
-drop table departureDelays;
+-- MAGIC %fs ls dbfs:/mnt/demo-dataset/raw/
+
+-- COMMAND ----------
+
+-- MAGIC %fs cp dbfs:/mnt/demo-dataset/raw/airport-codes-na.txt dbfs:/mnt/demo-dataset/raw/airport-codes-na 
+
+-- COMMAND ----------
+
+drop table IF EXISTS departureDelays;
 create external table departureDelays (date_dtm string,
 delay string,
 distance string,
 origin string,
 destination string)
 USING CSV
- location 'dbfs:/FileStore/shared_uploads/jaseemhamsa@microsoft.com/departureDelays/' TBLPROPERTIES('skip.header.line.count'='1');
+ location "dbfs:/mnt/demo-dataset/raw/departureDelays" TBLPROPERTIES('skip.header.line.count'='1');
+
+-- COMMAND ----------
+
+-- MAGIC %fs cp dbfs:/mnt/demo-dataset/raw/departuredelays.csv dbfs:/mnt/demo-dataset/raw/departureDelays
 
 -- COMMAND ----------
 
@@ -46,7 +58,16 @@ CREATE OR REPLACE TEMPORARY VIEW  departureDelays_geo as
 
 -- COMMAND ----------
 
+-- MAGIC %md #### Determining the longest delay in this dataset
+
+-- COMMAND ----------
+
 select max(delay) from departureDelays_geo;
+
+-- COMMAND ----------
+
+-- MAGIC %md #### What flights departing San Antonio (SAT) are most likely to have significant delays
+-- MAGIC Note, delay can be <= 0 meaning the flight left on time or early
 
 -- COMMAND ----------
 
@@ -54,14 +75,3 @@ select src,dst, avg(delay) as delay from departureDelays_geo
   where src = 'SAT' and delay > 0
   group by src,dst
   order by delay DESC;
-
--- COMMAND ----------
-
-groupBy("src", "dst")filter("src = 'SAT' and delay > 0").
-  groupBy("src", "dst").
-  avg("delay").
-  orderBy(org.apache.spark.sql.functions.col("avg(delay)").desc
-
--- COMMAND ----------
-
-
