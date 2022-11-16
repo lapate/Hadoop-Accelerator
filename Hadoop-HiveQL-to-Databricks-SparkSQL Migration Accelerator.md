@@ -138,9 +138,47 @@ Perform the following tasks:
 1. Todo - Create ADLS Gen2
     - Describe steps
       ![Tag](./images/ADLS-Provision-complete.png)
-2. Todo - Steps - 2
-3. Todo - Steps - 3
-4. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using Azure Data Factory
+
+2. Launch Microsoft Edge or Google Chrome web browser. Currently, Data Factory UI is supported only in Microsoft Edge and Google Chrome web browsers.
+    ![Tag](./images/ADF-Provision-1.png)
+
+3. Go to the Azure Data Factory Studio and choose the Create a new data factory radio button.
+
+4. You will automatically enter the homepage of the Azure Data Factory Studio once the data factory resource is created
+        
+5. Click on the Ingest tile to start the Copy Data tool.
+    ![Tag](./images/ADF-Provision-2.png)
+
+6. On the Properties page of the Copy Data tool, choose Built-in copy task then click Next.
+
+7. Click on New Connection
+    ![Tag](./images/ADF-Provision-3.png)
+
+8. Search for HDFS and click continue.
+
+9. Enter your cluster information and leave authentication type as Anonymous
+    ![Tag](./images/ADF-Provision-4.png)
+
+10. Enter the location of the files to be transferred from HDFS to ADLS. The path should be: user/azureuser/demo/
+    ![Tag](./images/ADF-Provision-5.png)
+
+11. Specify the target system to land the airport data stored in HDFS by selecting Azure Data Lake Storage Gen2
+    ![Tag](./images/ADF-Provision-6.png)
+
+12. Click New Connection and select the Azure subscription and Storage account to house the airport data being migrated.
+    ![Tag](./images/ADF-Provision-7.png)
+
+13. Click Test connection to ensure all is set properly.
+
+14.	Click on Browse to navigate to the target folder (flights) in the desired destination then select Next
+    ![Tag](./images/ADF-Provision-8.png)
+
+15.	Provide a name to the copy data task to be created, then run the pipeline
+    ![Tag](./images/ADF-Provision-9.png)
+
+16. Once the pipeline run is completed, verify that it was run successfully. Navigate to the ADLS container specified from Azure portal and ensure the files have been successfully landed in your desired target directory
+
+17. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using Azure Data Factory
 
     ![Successful completion](./images/ADLS-Provision-complete.png)
 
