@@ -1,17 +1,27 @@
-# Accelerator
+# Hadoop workload migration accelerator
 
-## Efficient Solution Migration
+This document details step by step instructions to efficiently migrate the hadoop workloads to Azure DataBricks
 
-### Discovery and Assessment
+## Efficient Hadoop workload migration solution lab
 
-1. Todo - Steps - 1
-    - Describe steps
-      ![Tag](./images/ADLS-Provision-complete.png)
-2. Todo - Steps - 2
-3. Todo - Steps - 3
-4. Congratulations!! At this point you have successfully completed discovery and produced analysis results
+In this lab we'll start with optional step on assessment or discovery of assets using the solution from unravel data, followed by
 
-    ![Successful completion](./images/ADLS-Provision-complete.png)
+- Creating the Cloudera cluster environment
+- Loading data and exploring HiveQL workload
+- Migrating the date to Azure Date Lake Storage (ADLS) Gen2 using Azure Data Factory (ADF)
+- Migrating the data using the solution from WanDisco (optional)
+- Creating a DataBricks cluster and configuring the workspace
+- Finally, running, comparing and exploring the SQL workloads.
+
+### Discovery and Assessment (optional)
+
+1. Visit this webpage - https://docs.unraveldata.com/en/migrations.html and read the documentation
+2. Sign up for a trial subscription and explore the reports
+
+   - Cloud Mapping per Host
+   - Workload Fit
+   - Services and Version compatibility
+3. Congratulations!! At this point you have successfully completed discovery and produced analysis results
 
 ### Explore existing Hadoop environment and run typical HiveQL queries
 
@@ -30,7 +40,7 @@ Perform the following tasks:
 3. Make a note of the Subscription ID associated with your account.
 
     ![portal image](./images/portal-subscription-id.png)
-    
+
 4. In the toolbar, click Cloud Shell.
 
     ![portal image](./images/portal-cloud-shell.png)
@@ -44,7 +54,7 @@ Perform the following tasks:
     ![Portal image](./images/power-shell-6.png)
 
 7. Run the command shown below to retrieve the script that create the resources and the virtual machine that will be used to run Cloudera.
-    
+
         wget https://raw.githubusercontent.com/JohnPWSharp/MigrationWorkshop/main/clouderasetup.ps1
 
 8. In the Cloud Shell toolbar, select Open editor.
@@ -60,7 +70,7 @@ Perform the following tasks:
 11. Run the script with the following command:
 
         .\clouderasetup.ps1
-        
+
     As the script runs, you will see various messages when the resources are created. The script will take about 5 minutes to complete. When it has finished, it will display the IP address of the new virtual machine. Make a note of this address.
 
     ![Portal image](./images/portal-img-11.png)
@@ -105,7 +115,7 @@ Perform the following tasks:
     ![Portal image](./images/cloudera-manager-20.png)
 
 21. Log into the edge node using azureuser
-    
+
          ssh azureuser@<ip address of the edgenode>
 
     ![Portal image](./images/edge-node-21.png)
@@ -113,7 +123,7 @@ Perform the following tasks:
 22. Copy the files from git repo to edge node for the test runs
 
         wget <github link to data>
-        
+
 23. Copy the raw data to hdfs location
 
 24. Copy sample hql file
@@ -130,14 +140,29 @@ Perform the following tasks:
 
 28. Congratulations!! At this point you have successfully setup Cloudera Hadoop cluster. Mounted raw dataset and explored several typical queries
 
-    ![Successful completion](./images/ADLS-Provision-complete.png)
-
-
 ### Migrate raw data from Hadoop File System to Azure Data Lake Storage gen2 using Azure Data Factory
 
-1. Todo - Create ADLS Gen2
-    - Describe steps
-      ![Tag](./images/ADLS-Provision-complete.png)
+1. Create Azure Data Lake Storage Gen2
+    - In the Azure portal, search for and navigate to Azure Data Lake Storage resource creation wizard. Below is the initial screen. Enter the details on subscription name and the resource group, workspace name, region as shown below
+    ![Tag](./images/ADLS-Provision-0.png)
+    - Click "Create" and leave default
+    ![Tag](./images/ADLS-Provision-1.png)
+    - Provide Subscription, Resource Group, Region and Storage Account Name and Click "Next Advanced"
+    ![Tag](./images/ADLS-Provision-2.png)
+    - Select Enable Hierarchical Namespace and Click "Next Networking"
+    ![Tag](./images/ADLS-Provision-3.png)
+    - Leave default and Click "Next Data Protection"
+    ![Tag](./images/ADLS-Provision-4.png)
+    - Leave default and Click "Next Encryption"
+    ![Tag](./images/ADLS-Provision-5.png)
+    - Leave default and Click "Next Tags"
+    ![Tag](./images/ADLS-Provision-6.png)
+    - Click on "Review". Validation begins. Fix any validation errors.
+    ![Tag](./images/ADLS-Provision-7.png)
+    - Click on "Create". Deployment begins
+    ![Tag](./images/ADLS-Provision-deployment.png)
+    - Finally the storage account is provisioned when deployment is completed
+    ![Tag](./images/ADLS-Provision-complete.png)
 
 2. Launch Microsoft Edge or Google Chrome web browser. Currently, Data Factory UI is supported only in Microsoft Edge and Google Chrome web browsers.
     ![Tag](./images/ADF-Provision-1.png)
@@ -145,7 +170,7 @@ Perform the following tasks:
 3. Go to the Azure Data Factory Studio and choose the Create a new data factory radio button.
 
 4. You will automatically enter the homepage of the Azure Data Factory Studio once the data factory resource is created
-        
+
 5. Click on the Ingest tile to start the Copy Data tool.
     ![Tag](./images/ADF-Provision-2.png)
 
@@ -170,31 +195,31 @@ Perform the following tasks:
 
 13. Click Test connection to ensure all is set properly.
 
-14.	Click on Browse to navigate to the target folder (flights) in the desired destination then select Next
+14. Click on Browse to navigate to the target folder (flights) in the desired destination then select Next
     ![Tag](./images/ADF-Provision-8.png)
 
-15.	Provide a name to the copy data task to be created, then run the pipeline
+15. Provide a name to the copy data task to be created, then run the pipeline
     ![Tag](./images/ADF-Provision-9.png)
 
 16. Once the pipeline run is completed, verify that it was run successfully. Navigate to the ADLS container specified from Azure portal and ensure the files have been successfully landed in your desired target directory
 
 17. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using Azure Data Factory
 
-    ![Successful completion](./images/ADLS-Provision-complete.png)
+    ![Successful completion](./images/ADLS-complete-data.png)
 
 ### Migrate raw data from Hadoop File System to Azure Data Lake Storage Gen2 using WanDisco partner solution (optional)
 
 1. If using 3rd party tool to migrate data learn the process from the video series below
     - Journey to Live Data Migration (How-To Video Series)
-    ![Getting started (Prerequisites)]("https://wandisco.wistia.com/medias/eh42c8lt77")
-    ![Create Data Migrator resource]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=80ft4yys5b")
-    ![Install Migrator on your edge node]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=altiee9udk")
-    ![Identify the Target for Hadoop data]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=q4x8jfm8jp")
-    ![Create Migration and move data!]("https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=0ppt8o9h8p")
+      - Getting started (Prerequisites) "https://wandisco.wistia.com/medias/eh42c8lt77"
+      - Create Data Migrator resource "https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=80ft4yys5b"
+      - Install Migrator on your edge node "https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=altiee9udk"
+      - Identify the Target for Hadoop data "https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=q4x8jfm8jp"
+      - Create Migration and move data! "https://fast.wistia.net/embed/channel/qg51p8erky?wchannelid=qg51p8erky&wmediaid=0ppt8o9h8p"
 
 2. Congratulations!! At this point you have successfully migrated data from Cloudera Hadoop Cluster to Azure Data Lake Storage using WanDisco partner solution
 
-    ![Successful completion](./images/ADLS-Provision-complete.png)
+    ![Successful completion](./images/ADLS-complete-data.png)
 
 ### Setup DataBricks environment and run matched SparkSQL queries. Explore the results
 
@@ -243,5 +268,4 @@ Perform the following tasks:
     - Execute - ncsa-hadoopaccelerator-sample-sql-notebook.dbc to see how datasets are consumed inline and then  SQL queries are used to obtain same flight delay information
     ![Tag](./images/DB-WKSP-Cluster-Notebook2-SQL.png)
 
-5. Congratulations!! At this point you have successfully setup DataBricks cluster. Mounted raw dateset as Azure Data Lake Storage (ADLS) GEN2 and explored the queries converted from HiveQL
-    ![Successful completion](./images/ADLS-Provision-complete.png)
+5. Congratulations!! At this point you have successfully setup DataBricks cluster. Mounted raw dateset as Azure Data Lake Storage (ADLS)  and explored the queries converted from HiveQL to Spark SQL
